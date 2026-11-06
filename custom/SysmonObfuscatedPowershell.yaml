@@ -25,7 +25,7 @@ query: |-
   | parse RuleName with * "technique_id=" TechniqueId "," * "technique_name=" TechniqueName
   | parse Hashes with * "SHA1=" SHA1 "," * "MD5=" MD5 "," * "SHA256=" SHA256 "," * "IMPHASH=" IMPHASH 
   | where EventID == 1
-  | where tolower(CommandLine) contains "powershell"
+  | where tolower(Image) endswith "powershell.exe" or tolower(OriginalFileName) == "powershell.exe" or tolower(CommandLine) contains "powershell"
   | extend backtickCount = countof(CommandLine, "`")
   | extend percentCount = countof(CommandLine, "%")
   | extend caretCount = countof(CommandLine, "^")
